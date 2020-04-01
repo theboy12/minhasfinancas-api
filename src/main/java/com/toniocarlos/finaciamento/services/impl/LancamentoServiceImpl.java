@@ -1,6 +1,7 @@
 package com.toniocarlos.finaciamento.services.impl;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -35,6 +36,7 @@ public class LancamentoServiceImpl implements LancamentoService {
 	public Lancamento salvar(Lancamento lancamento) {
 		validar(lancamento);
 		lancamento.setStatus(StatusLancamento.PENDENTE);
+		lancamento.setDataCadastro(LocalDate.now());
 		return lancamentoRepository.save(lancamento);
 	}
 
@@ -86,9 +88,9 @@ public class LancamentoServiceImpl implements LancamentoService {
 			throw new RegraNegocioException("Informe um Mês válido!");
 		}
 		
-		if(lancamento.getAno() == null || lancamento.toString().length() < 4) {
+		if(lancamento.getAno() == null || lancamento.getAno().toString().length() < 4) {
 			
-			throw new RegraNegocioException("Informe um ano válido!");
+			throw new RegraNegocioException("Informe um Ano válido!");
 		}
 		
 		if(lancamento.getUsuario() == null || lancamento.getUsuario().getId() == null) {
